@@ -12,3 +12,4 @@ C:\Users\stev2\source\repos\Grades\Grades\obj\Debug\netcoreapp3.1\Grades.csproj.
 C:\Users\stev2\source\repos\Grades\Grades\obj\Debug\netcoreapp3.1\Grades.dll
 C:\Users\stev2\source\repos\Grades\Grades\obj\Debug\netcoreapp3.1\Grades.pdb
 C:\Users\stev2\source\repos\Grades\Grades\obj\Debug\netcoreapp3.1\Grades.genruntimeconfig.cache
+C:\Users\stev2\source\repos\Grades\Grades\bin\Debug\netcoreapp3.1\grades.txt

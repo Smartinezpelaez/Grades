@@ -1,18 +1,30 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Grades
 {
-   public class GradeBook
+   public  class GradeBook : GradeTracker
     {
         
         public GradeBook(string name = "there is no name" )
         {
+            Console.WriteLine("Geadebook Ctor");
             Name = name;
             grades = new List<float>();
         }
-        public void AddGrade(float grade) {
+        public override void DoSomething()
+        {
+           
+        }
+
+        public override IEnumerator GetEnumerator() 
+        {
+            return grades.GetEnumerator();
+        }
+        public override void AddGrade(float grade) {
             if (grade >=0 && grade <=1000 )
             {
                 grades.Add(grade);
@@ -20,8 +32,11 @@ namespace Grades
            
         }
 
-        public GradeStatics ComputeStatics ()
+       // public bool ThrowAwayLowest { get; set; }
+
+        public override GradeStatics ComputeStatics ()
         {
+            Console.WriteLine("Gradebook compute");
             GradeStatics stats = new GradeStatics();
             
             float sum = 0.0f;
@@ -43,43 +58,42 @@ namespace Grades
             stats.AvergareGrade = sum / grades.Count;
             return stats;
         }
-        private string _name;
 
-        public string Name
+        public  override void WriteGrades(TextWriter textWriter )
         {
-          
-            get {
-                return _name;  
-                 }
+            textWriter.WriteLine("Grades ");
+            //foreach (float grade  in grades)
+            //{
+            //    textWriter.WriteLine(grade);
 
-            set
+            //}
+            //for (int i = 0; i < grades.Count; i++)
+            //{
+            //    textWriter.WriteLine(grades[i]);
+            //}
+            //textWriter.WriteLine("******");
+
+            //for (int i = grades.Count -1 ; i >= 0; i--)
+            //{
+            //    textWriter.WriteLine(grades[i]);
+            //}
+            //int i = 0;
+            //while (i < grades.Count)
+            //{
+            //    textWriter.WriteLine(grades[i]);
+            //    i++;
+            //}
+            //textWriter.WriteLine("******");
+
+            int i = 0;
+            do
             {
-                if (_name != value)
-                {
-                    var oldvalue = _name;
-                    _name = value;
+                textWriter.WriteLine(grades[i]);
+                i++;
+            } while (i < grades.Count);
+            textWriter.WriteLine("******");
+        } 
 
-                    if (namedChange != null)
-                    {
-                        NameChangedEventArgs args = new NameChangedEventArgs();
-                        args.OldValue = oldvalue;
-                        args.NewValue = value;
-                        namedChange(this, args);
-                    }
-                   
-                }
-               
-                //if (!string.IsNullOrEmpty(value))
-                //{
-                    
-                //}
-
-            }
-
-        }
-
-        public event NamedChangeDelegate namedChange;
-
-       private  List<float>grades ;
+       protected  List<float>grades ;
     }
 }

@@ -11,11 +11,11 @@ namespace Grades
             HighestGrade = 0;
             LowestGrade = float.MaxValue;
         }
-       public float AvergareGrade;
-       public float HighestGrade;
-       public float LowestGrade;
+        public float AvergareGrade;
+        public float HighestGrade;
+        public float LowestGrade;
 
-        public char LetterGrade 
+        public char LetterGrade
         {
             get
             {
@@ -45,9 +45,9 @@ namespace Grades
             }
         }
 
-        public string Description  
+        public string Description
         {
-            get 
+            get
             {
                 string result;
                 switch (LetterGrade)
@@ -69,12 +69,12 @@ namespace Grades
                         break;
                     default:
                         result = "Fail";
-                        break;  
+                        break;
                 }
-                return  result;
-                
+                return result;
+
             }
-        
+       
              
         }
        

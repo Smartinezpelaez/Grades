@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.IO;
 
 namespace Grades
 {
@@ -15,43 +15,90 @@ namespace Grades
         //}
         static void Main(string[] args)
         {
+          IGradeTracker book = CreateGradeBook();            
 
-            //Arrays();
-            //Immutable();
-            // PassbyvalueAndRef();
+            try
+            {
+                using (FileStream stream = File.Open("grades.txt", FileMode.Open))
+                using (StreamReader reader = new StreamReader(stream))
+                {
 
 
-            GradeBook book = new GradeBook("Steven´Books");
-            book.AddGrade(91f);
-            book.AddGrade(45.6f);
-            book.AddGrade(75);
+                    string line = reader.ReadLine();
+
+                    //string[] lines = File.ReadAllLines("grades.txt");
+                    //foreach (string line in lines)
+                    while (line != null)
+                    {
+                        float grade = float.Parse(line);
+                        book.AddGrade(grade);
+                        line = reader.ReadLine();
+                    }
+                    reader.Close();
+                    stream.Close();
+                }
+
+            }
+            catch (FileNotFoundException)
+            {
+
+                Console.WriteLine("Could not find the file grades.txt");
+                return;
+            }
+            catch (UnauthorizedAccessException)
+            {
+
+                Console.WriteLine("no access");
+                return;
+            }
+            //finally 
+            //{
+            //    if (reader != null)
+            //    {
+            //        reader.Close();
+
+            //    }
+            //    if (stream != null)
+            //    {
+            //        stream.Close();
+
+            //    }
+
+            //}
+            foreach (float grade  in book)
+            {
+                Console.WriteLine(grade);
+            }
+            //book.DoSomething();
+            //book.WriteGrades(Console.Out);
+
+            try
+            {
+                //Console.WriteLine("Please enter a book name ");
+                //book.Name = Console.ReadLine();
+            }
+            catch (Exception)
+            {
+
+                Console.WriteLine("Invalid name");
+            }
+
 
             GradeStatics stats = book.ComputeStatics();
+            Console.WriteLine(stats.AvergareGrade);
+            Console.WriteLine(stats.HighestGrade);
+            Console.WriteLine(stats.LowestGrade);
+            Console.WriteLine("{0} {1}", stats.LetterGrade, stats.Description);
 
 
-            //int number = 20;
-            //WriteBytes(number);
-            //WriteBytes(stats.AvergareGrade);
-            // book.Name = "";
 
-            //book.namedChange = new NamedChangeDelegate(OnNameChanged);
-            //book.namedChange += OnNameChanged;
-            //book.namedChange += OnNameChanged;
-            //book.namedChange += OnNameChanged2;
-            //book.namedChange -= OnNameChanged;
-            //book.Name = "Vanessa´s Book";
-            //WriteName(book.Name);
+            
+        }
 
-            Console.WriteLine("La nota promedio es " + stats.AvergareGrade);
-            Console.WriteLine("La nota mas alta es " + stats.HighestGrade);
-            Console.WriteLine("la noa mas baja es " + stats.LowestGrade);
-            Console.WriteLine("{0} {1}", stats.LetterGrade , stats.Description);
-      
-
-            //GradeBook book1 = book;
-            //book1.AddGrade(75f);
-
-            //Console.WriteLine();
+        private static IGradeTracker CreateGradeBook()
+        {
+            IGradeTracker book = new ThrowAwayGradeBook ("Steven´Books");
+            return book; 
         }
 
         //private static void OnNameChanged2(object sender, NameChangedEventArgs args)
@@ -70,7 +117,7 @@ namespace Grades
         //    byte[] bytes = BitConverter.GetBytes(value);
         //    WriteBytearray(bytes);
         //}
-       
+
 
         //private static void WriteBytes(float value)
         //{
@@ -94,7 +141,7 @@ namespace Grades
         //        Console.WriteLine(name);
 
         //    }
-        
+
         //}
 
 
